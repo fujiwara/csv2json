@@ -2,7 +2,7 @@
 
 ## Overview
 
-csv2json is a simple command line interface (CLI) tool that converts CSV files to JSON format. It is written in Go and is highly efficient and reliable.
+csv2json is a simple command line interface (CLI) tool that converts CSV files to JSON format.
 
 ## Installation
 
@@ -18,19 +18,24 @@ csv2json can be used either by specifying a CSV file as an argument or by piping
 
 ```bash
 $ csv2json file.csv
-$ cat file.csv | csv2json
-The tool reads the CSV data, parses it, and then outputs the data in JSON format to standard output.
 ```
+
+```bash
+$ cat file.csv | csv2json
+```
+
+The tool reads the CSV data, parses it, and then outputs the data in JSON format to standard output.
 
 ## Flags
 
 `-n`
 The -n flag specifies that the CSV file does not have a header row. If this flag is set, each row is output as a simple JSON array.
 
-````bash
+```bash
 $ csv2json -n file.csv
-If the -n flag is not set and the CSV file contains a header row, the tool uses the header row to create JSON objects. The keys in the JSON objects correspond to the fields in the header row, and the values correspond to the data in each record.
 ```
+
+If the -n flag is not set and the CSV file contains a header row, the tool uses the header row to create JSON objects. The keys in the JSON objects correspond to the fields in the header row, and the values correspond to the data in each record.
 
 ```bash
 $ csv2json file.csv

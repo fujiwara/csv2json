@@ -28,8 +28,9 @@ The tool reads the CSV data, parses it, and then outputs the data in JSON format
 
 ## Flags
 
-`-n`
-The -n flag specifies that the CSV file does not have a header row. If this flag is set, each row is output as a simple JSON array.
+### `-n`
+
+The `-n` flag specifies that the CSV file does not have a header row. If this flag is set, each row is output as a simple JSON array.
 
 ```bash
 $ csv2json -n file.csv
@@ -49,7 +50,6 @@ Example output:
   "Foo"
 ]
 ```
-
 
 If the -n flag is not set and the CSV file contains a header row, the tool uses the header row to create JSON objects. The keys in the JSON objects correspond to the fields in the header row, and the values correspond to the data in each record.
 
@@ -71,6 +71,10 @@ Example output.
   "last_name": "Foo"
 }
 ```
+
+### `-c`
+
+The `-c` flag specifies that the JSON output should be in a compact format. If this flag is set, the JSON objects will be output without any extra white space.
 
 ## Error Handling
 

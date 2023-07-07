@@ -12,8 +12,9 @@ import (
 
 func main() {
 	var in io.ReadCloser
-	var noHeader bool
+	var noHeader, compact bool
 	flag.BoolVar(&noHeader, "n", false, "no header line")
+	flag.BoolVar(&compact, "c", false, "compact output")
 	flag.Parse()
 	if len(flag.Args()) >= 1 {
 		f, err := os.Open(flag.Arg(0))
@@ -47,15 +48,17 @@ LINES:
 		}
 	}
 	if noHeader {
-		dumpCSV(os.Stdout, records)
+		dumpCSV(os.Stdout, records, maxColumns, compact)
 	} else {
-		dumpCSVIncludesHeader(os.Stdout, records, maxColumns)
+		dumpCSVIncludesHeader(os.Stdout, records, maxColumns, compact)
 	}
 }
 
-func dumpCSV(w io.Writer, records [][]string) {
+func dumpCSV(w io.Writer, records [][]string, _ int, compact bool) {
 	enc := json.NewEncoder(w)
-	enc.SetIndent("", "  ")
+	if !compact {
+		enc.SetIndent("", "  ")
+	}
 	for _, record := range records {
 		if err := enc.Encode(record); err != nil {
 			panic(err)
@@ -63,9 +66,8 @@ func dumpCSV(w io.Writer, records [][]string) {
 	}
 }
 
-func dumpCSVIncludesHeader(w io.Writer, records [][]string, maxColumns int) {
-	header := make([]string, 0, maxColumns)
-	header = records[0]
+func dumpCSVIncludesHeader(w io.Writer, records [][]string, maxColumns int, compact bool) {
+	header := records[0]
 	output := []map[string]string{}
 	for _, record := range records[1:] {
 		m := map[string]string{}
@@ -78,7 +80,9 @@ func dumpCSVIncludesHeader(w io.Writer, records [][]string, maxColumns int) {
 		output = append(output, m)
 	}
 	enc := json.NewEncoder(w)
-	enc.SetIndent("", "  ")
+	if !compact {
+		enc.SetIndent("", "  ")
+	}
 	for _, m := range output {
 		if err := enc.Encode(m); err != nil {
 			panic(err)

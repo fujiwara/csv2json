@@ -35,10 +35,41 @@ The -n flag specifies that the CSV file does not have a header row. If this flag
 $ csv2json -n file.csv
 ```
 
+Example output:
+
+```json
+[
+  "1",
+  "John",
+  "Doe"
+]
+[
+  "2",
+  "Jane",
+  "Foo"
+]
+```
+
+
 If the -n flag is not set and the CSV file contains a header row, the tool uses the header row to create JSON objects. The keys in the JSON objects correspond to the fields in the header row, and the values correspond to the data in each record.
 
 ```bash
 $ csv2json file.csv
+```
+
+Example output.
+
+```json
+{
+  "id": "1",
+  "first_name": "John",
+  "last_name": "Doe"
+}
+{
+  "id": "2",
+  "first_name": "Jane",
+  "last_name": "Foo"
+}
 ```
 
 ## Error Handling
